@@ -5,17 +5,17 @@
 
 #define BUFFER 1000
 
-void reverse_string(char from[], char to[], int length);
+void reverse_string(char line[], int length);
 int get_length(char s[]);
 int getline_a(char s[], int lim);
 
 int main(void) {
-  char line[BUFFER], temp[BUFFER];
+  char line[BUFFER];
   int len;
   while ((len = getline_a(line, BUFFER)) > 0) {
     len = get_length(line);
-    reverse_string(line, temp, len);
-    printf("%s", temp);
+    reverse_string(line, len);
+    printf("%s", line);
   }
   return 0;
 }
@@ -43,10 +43,24 @@ int get_length(char s[]) {
   return i;
 }
 
-void reverse_string(char from[], char to[], int length) {
-  int i, j;
-  for (i = length - 1, j = 0; i >= 0 && j < length; i--, j++) {
-    to[j] = from[i];
+void reverse_string(char s[], int length) {
+  int front, back;
+  char temp;
+
+  front = 0;
+  back = length;
+
+  if (s[back - 1] == '\n') {
+    back -= 2;
+  } else {
+    back -= 1;
   }
-  to[length] = '\0';
+
+  while (back > front) {
+    temp = s[front];
+    s[front] = s[back];
+    s[back] = temp;
+    front++;
+    back--;
+  }
 }
