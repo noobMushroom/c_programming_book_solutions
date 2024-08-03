@@ -54,9 +54,9 @@ void uncomment(char s[], char to[]) {
     current = s[i];
     next = s[i + 1];
 
-    if (current == '"' && !quote) {
+    if (current == '"' && !quote && !block_comments && !line_comments) {
       quote = true;
-    } else if (quote && current == '"') {
+    } else if (quote && current == '"' && !block_comments && !line_comments) {
       quote = false;
     }
 
