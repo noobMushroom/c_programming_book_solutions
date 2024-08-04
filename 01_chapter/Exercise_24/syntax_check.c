@@ -1,6 +1,6 @@
 /* Exercise 1.24: Write a program to check a C program for rudimentary syntax
  * error like unbalanced parentheses, brackets and braces. Don't forget about
- * quotes, both single and double, escape sequences, and comments*/
+ * quotes, both single and double, escape sequences, and  comments*/
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -31,9 +31,8 @@ int main(void) {
       return 1;
     }
   }
-  if (ptr != 0) {
-    printf("Unbalanced symbols detected at end of input. Stack pointer: %d\n",
-           ptr);
+  if (ptr != 0 || block_comment || line_comment) {
+    printf("Unbalanced symbols detected at end of input\n");
     return 1;
   }
   printf("No syntax errors detected.\n");
@@ -99,12 +98,10 @@ int check_syntax(char s[]) {
     } else if (line_comment || block_comment) {
       if (block_comment && current == '\n') {
         line_comment = block_comment = false;
-        ptr -= 2;
         continue;
       } else if (line_comment && current == '*' && next == '/') {
         line_comment = false;
         i++;
-        ptr -= 2;
         continue;
       }
     }
@@ -116,13 +113,9 @@ int check_syntax(char s[]) {
 bool is_comment(char current, char next) {
   if (current == '/' && next == '*') {
     line_comment = true;
-    stack[ptr++] = '/';
-    stack[ptr++] = '*';
     return true;
   } else if (current == '/' && next == '/') {
     block_comment = true;
-    stack[ptr++] = '/';
-    stack[ptr++] = '/';
     return true;
   }
   return false;
