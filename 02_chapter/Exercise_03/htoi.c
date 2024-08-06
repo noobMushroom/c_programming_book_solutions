@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define BUFFER 64
@@ -41,7 +42,7 @@ long double htoi(char s[], int len) {
 
   if (len == 0 || s == NULL) {
     printf("Empty or null input\n");
-    return 0;
+    exit(EXIT_FAILURE);
   }
 
   if (s[j] == '0' && (s[j + 1] == 'x' || s[j + 1] == 'X'))
@@ -49,7 +50,7 @@ long double htoi(char s[], int len) {
 
   if (j == len) {
     printf("No hex digits after prefix\n");
-    return 0;
+    exit(EXIT_FAILURE);
   }
 
   for (i = len - 1; i >= j; i--) {
@@ -60,7 +61,7 @@ long double htoi(char s[], int len) {
       base += (s[i] - '0') * pow(16, value);
     } else {
       printf("Wrong input\n");
-      return 0;
+      exit(EXIT_FAILURE);
     }
     value++;
   }
