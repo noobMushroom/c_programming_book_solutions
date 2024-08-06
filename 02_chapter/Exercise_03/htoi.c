@@ -3,6 +3,7 @@
  * integer value. The allowable digits are 0 through 9, a through f, and A
  * through F.*/
 
+#include <ctype.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -33,29 +34,35 @@ int main(void) {
 }
 
 long double htoi(char s[], int len) {
-  int j, i, power;
+  int j, i;
+  char temp;
   double base, value;
   j = base = value = 0;
+
+  if (len == 0 || s == NULL) {
+    printf("Empty or null input\n");
+    return 0;
+  }
+
   if (s[j] == '0' && (s[j + 1] == 'x' || s[j + 1] == 'X'))
     j += 2;
 
+  if (j == len) {
+    printf("No hex digits after prefix\n");
+    return 0;
+  }
+
   for (i = len - 1; i >= j; i--) {
-    if (((s[i] >= 'A' || s[i] >= 'a') && (s[i] <= 'f' || s[i] <= 'F')) ||
-        s[i] >= 0 && s[i] <= '9') {
-      power = pow(16, value);
-      if (s[i] >= 'a' && s[i] <= 'f') {
-        base += ((s[i] - 'a') + 10) * power;
-      } else if (s[i] >= 'A' && s[i] <= 'F') {
-        base += ((s[i] - 'A') + 10) * power;
-      } else if (s[i] >= '0' && s[i] <= '9') {
-        base += (s[i] - '0') * power;
-      }
-      value++;
+    temp = tolower(s[i]);
+    if (isalpha(temp) && temp >= 'a' && temp <= 'f') {
+      base += ((temp - 'a') + 10) * pow(16, value);
+    } else if (isdigit(temp)) {
+      base += (s[i] - '0') * pow(16, value);
     } else {
       printf("Wrong input\n");
       return 0;
     }
+    value++;
   }
-
   return base;
 }
