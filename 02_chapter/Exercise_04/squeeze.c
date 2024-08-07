@@ -9,15 +9,13 @@
 void squeeze(char s1[], char s2[]);
 
 int main(void) {
-  int i, c;
   char s1[LENGTH], s2[LENGTH];
 
   printf("Enter the first string: ");
   fgets(s1, sizeof(s1), stdin);
 
   printf("Enter the second string: ");
-  fgets(s2, sizeof(s1), stdin);
-  i = 0;
+  fgets(s2, sizeof(s2), stdin);
 
   squeeze(s1, s2);
 
@@ -30,7 +28,7 @@ void squeeze(char s1[], char s2[]) {
   int i, j;
   char temp[BUFFER] = {0};
 
-  /* Iterates through s2 string and Increase of the counter of the characters
+  /* Iterates through s2 string and increase the counter of the characters
    * found in s2 string*/
   for (i = 0; s2[i] != '\0' && s2[i] != '\n'; i++)
     ++temp[(unsigned char)s2[i]];
