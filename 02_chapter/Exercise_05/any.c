@@ -5,7 +5,6 @@
 
 #include <stdio.h>
 
-#define BUFFER 256  /* Buffer for all the ascii characters */
 #define LENGTH 1000 /* Buffer length for input string */
 
 int any(char s1[], char s2[]);
